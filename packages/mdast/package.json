@@ -24,6 +24,8 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
+		"@types/mdast": "4.0.4",
+		"@types/unist": "3.0.3",
 		"pele": "1.10.0",
 		"unist-util-visit": "5.0.0"
 	}
