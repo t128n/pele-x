@@ -1,0 +1,51 @@
+:root {
+	--pele-bg: #ffffff;
+	--pele-fg: #1f2933;
+	--pele-muted: #62707d;
+	--pele-line: #52606d;
+	--pele-surface: #f5f7fa;
+	--pele-surface-alt: #e4e9ee;
+	--pele-border: #cbd2d9;
+	--pele-accent: #2563a9;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--pele-bg: #11161b;
+		--pele-fg: #e4e9ee;
+		--pele-muted: #9aa7b3;
+		--pele-line: #b8c2cc;
+		--pele-surface: #1b232b;
+		--pele-surface-alt: #27313b;
+		--pele-border: #46525f;
+		--pele-accent: #82b6ec;
+	}
+}
+
+.pele-diagram {
+	margin: 1.5rem 0;
+	overflow-x: auto;
+}
+
+.pele-diagram svg {
+	display: block;
+	max-width: 100%;
+	height: auto;
+	margin-inline: auto;
+}
+
+.pele-diagram figcaption {
+	margin-top: 0.75rem;
+	color: var(--pele-muted);
+	font-size: 0.875rem;
+	text-align: center;
+}
+
+.pele-error {
+	padding: 1rem;
+	border: 1px solid var(--pele-border);
+	border-radius: var(--pele-radius, 4px);
+	background: var(--pele-surface);
+	color: var(--pele-fg);
+	white-space: pre-wrap;
+}

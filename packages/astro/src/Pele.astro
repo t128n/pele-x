@@ -1,0 +1,17 @@
+---
+import { renderDiagram } from '@pele-x/mdast';
+
+interface Props {
+	source: string;
+	title?: string;
+	zoom?: boolean;
+}
+
+const { source, title, zoom = false } = Astro.props;
+const { svg } = renderDiagram(source);
+---
+
+<figure class="pele-diagram" data-pele-zoom={zoom ? '' : undefined}>
+	<Fragment set:html={svg} />
+	{title ? <figcaption>{title}</figcaption> : null}
+</figure>
