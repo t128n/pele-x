@@ -12,10 +12,15 @@ flowchart LR
 	B --> C[Static SVG]
 ```
 
-## Choose your setup
+## Why static SVG?
 
-- Use the [Astro integration](astro/) directly in any Astro site.
-- Use the [Starlight plugin](starlight/) to add diagrams and the matching Starlight theme together.
-- Follow the [installation guide](install/) to add the packages to your project.
+Rendering diagrams during the build keeps pages fast. The browser does not download a Mermaid runtime, parse diagram source, or execute layout code. The SVG that reaches readers is small, predictable, and styled with the same CSS variables as the rest of the page.
+
+## Where Pele x fits
+
+- The [tutorial](./tutorial/getting-started/) is the best place to render your first diagram.
+- The [how-to guides](./how-to/install/) cover installation, authoring, and theming for specific goals.
+- The [reference](./reference/starlight/) lists every integration option and the diagram gallery.
+- The [explanation](./explanation/troubleshooting/) section describes how rendering works and how to fix common problems.
 
 Use either `mermaid` or `pele` as the fence language. Other code fences are left unchanged.
