@@ -57,7 +57,14 @@ npm trust list astro-pele
 npm trust list starlight-pele
 ```
 
-A new trusted publisher configuration must complete its first successful publish within **2 days**, or it expires. Run the publish workflow soon after configuring it.
+A new trusted publisher configuration must complete its first successful publish within **2 days**, or it expires. Cut a patch changeset and run the publish workflow soon after configuring it, otherwise `changeset publish` has nothing new to publish and cannot validate the configuration:
+
+```sh
+bun run changeset      # patch bump for the packages you want to validate
+git add .changeset && git commit -m "chore: add changeset" && git push
+# merge the Version Packages PR, then:
+gh workflow run publish.yml --repo t128n/pele-x
+```
 
 If you prefer the website, open each package on npmjs.com → **Settings** → **Trusted Publisher** → **GitHub Actions** and enter the same repository, workflow filename and `npm` environment. Allow direct publishing with `npm publish`.
 
