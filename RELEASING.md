@@ -10,6 +10,13 @@ The private apps (`pele-x-docs`, `pele-x-example-astro-basic`) are never publish
 
 Publishing uses **npm trusted publishing with OIDC**. There is no `NPM_TOKEN` secret in the normal flow.
 
+## Current state
+
+- `mdast-pele@0.1.0`, `astro-pele@0.1.0` and `starlight-pele@0.1.0` are published.
+- Trusted publishers are configured for all three packages with `publish.yml`, repository `t128n/pele-x`, environment `npm`.
+- The first publish through OIDC must happen within **2 days** of configuring trust (by 2026-10-27), or the configuration expires. Cut a patch changeset and run `publish.yml` to validate it.
+- The `0.1.0` versions were published locally before trust was configured. Provenance is not available because the repository is private.
+
 ## How it works
 
 | Workflow                        | Trigger                                                      | What it does                                                                                          |
@@ -25,9 +32,9 @@ Publishing uses **npm trusted publishing with OIDC**. There is no `NPM_TOKEN` se
 
 Publishing stays manual so a merged version PR never publishes by itself.
 
-## One-time bootstrap
+## One-time bootstrap (completed for 0.1.0)
 
-npm requires a package to exist before you can configure a trusted publisher for it. The very first `0.1.0` publish therefore needs one local publish with your npm login. It is the only token/session-based step.
+npm requires a package to exist before you can configure a trusted publisher for it. The first `0.1.0` publish was therefore done locally with an npm login. This is the only token/session-based step and it is already complete; keep it as a reference for a fresh registry.
 
 ```sh
 npm install --global npm@latest
@@ -41,7 +48,7 @@ This publishes `mdast-pele`, `astro-pele` and `starlight-pele` at `0.1.0`.
 
 ## Configure trusted publishing
 
-After the packages exist, configure each one. This requires npm CLI 11.15 or later, 2FA on the npm account, and write access to the packages.
+All three packages are already configured. This is the command set used; it requires npm CLI 11.15 or later, 2FA on the npm account, and write access to the packages.
 
 ```sh
 npm trust github mdast-pele --file publish.yml --repo t128n/pele-x --env npm --allow-publish
