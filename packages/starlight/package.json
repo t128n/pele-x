@@ -1,12 +1,39 @@
 {
 	"name": "starlight-pele",
 	"version": "0.1.0",
-	"private": true,
+	"description": "Starlight plugin that renders Mermaid fences to themeable SVG with Pele.",
+	"license": "MIT",
 	"type": "module",
+	"keywords": [
+		"starlight",
+		"astro",
+		"mermaid",
+		"pele",
+		"svg",
+		"diagrams",
+		"documentation"
+	],
+	"homepage": "https://t128n.github.io/pele-x/",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/t128n/pele-x.git",
+		"directory": "packages/starlight"
+	},
+	"bugs": {
+		"url": "https://github.com/t128n/pele-x/issues"
+	},
 	"files": [
 		"dist",
-		"theme.css"
+		"theme.css",
+		"README.md",
+		"LICENSE"
 	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"engines": {
+		"node": ">=22.23.4"
+	},
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"exports": {

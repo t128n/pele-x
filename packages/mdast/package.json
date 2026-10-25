@@ -1,11 +1,39 @@
 {
 	"name": "mdast-pele",
 	"version": "0.1.0",
-	"private": true,
+	"description": "Render Mermaid fences to static SVG with Pele in remark and Sätteri pipelines.",
+	"license": "MIT",
 	"type": "module",
-	"files": [
-		"dist"
+	"keywords": [
+		"mdast",
+		"remark",
+		"satteri",
+		"mermaid",
+		"pele",
+		"svg",
+		"diagrams",
+		"markdown"
 	],
+	"homepage": "https://t128n.github.io/pele-x/",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/t128n/pele-x.git",
+		"directory": "packages/mdast"
+	},
+	"bugs": {
+		"url": "https://github.com/t128n/pele-x/issues"
+	},
+	"files": [
+		"dist",
+		"README.md",
+		"LICENSE"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"engines": {
+		"node": ">=20"
+	},
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"exports": {

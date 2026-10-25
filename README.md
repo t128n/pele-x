@@ -14,15 +14,19 @@ Mermaid fences render to static, themeable SVG at build time. The browser gets n
 | `astro-pele`     | Astro integration, `<Pele />` component, neutral theme and zoom script |
 | `starlight-pele` | Starlight plugin and light/dark theme                                  |
 
-The packages are private at `0.1.0` until the npm scope is set.
+Published as `mdast-pele`, `astro-pele`, and `starlight-pele`. See [RELEASING.md](./RELEASING.md) for the release process.
 
 ## Starlight
+
+```sh
+npm install starlight-pele
+```
 
 ```js
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
-import starlightPele from 'starlight-pele';
+import { starlightPele } from 'starlight-pele';
 
 export default defineConfig({
 	integrations: [starlight({ title: 'Docs', plugins: [starlightPele()] })],
@@ -42,16 +46,20 @@ Add `zoom` to a fence for pan and zoom, or pass `starlightPele({ zoom: true })` 
 
 ## Astro
 
+```sh
+npm install astro-pele pele
+```
+
 ```js
 import { defineConfig } from 'astro/config';
-import pele from 'astro-pele';
+import { pele } from 'astro-pele';
 
 export default defineConfig({
 	integrations: [pele()],
 });
 ```
 
-For plain remark or Sätteri pipelines, import `remarkPele` from `mdast-pele/remark` or `satteriPele` from `mdast-pele/satteri`.
+For plain remark or Sätteri pipelines, install `mdast-pele` and import `remarkPele` from `mdast-pele/remark` or `satteriPele` from `mdast-pele/satteri`.
 
 ## Development
 

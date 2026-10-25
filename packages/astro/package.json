@@ -1,13 +1,39 @@
 {
 	"name": "astro-pele",
 	"version": "0.1.0",
-	"private": true,
+	"description": "Astro integration that renders Mermaid fences to static SVG with Pele.",
+	"license": "MIT",
 	"type": "module",
+	"keywords": [
+		"astro",
+		"astro-integration",
+		"mermaid",
+		"pele",
+		"svg",
+		"diagrams"
+	],
+	"homepage": "https://t128n.github.io/pele-x/",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/t128n/pele-x.git",
+		"directory": "packages/astro"
+	},
+	"bugs": {
+		"url": "https://github.com/t128n/pele-x/issues"
+	},
 	"files": [
 		"dist",
 		"src/Pele.astro",
-		"theme.css"
+		"theme.css",
+		"README.md",
+		"LICENSE"
 	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"engines": {
+		"node": ">=22.23.4"
+	},
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"exports": {

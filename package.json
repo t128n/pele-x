@@ -21,6 +21,7 @@
 		"verify:packages": "bun run scripts/verify-dist.ts",
 		"check": "bun run lint && bun run typecheck && bun run test && bun run build && bun run test:e2e && bun run verify:packages",
 		"changeset": "changeset",
+		"version": "changeset version",
 		"release": "bun run build && changeset publish"
 	},
 	"devDependencies": {
