@@ -1,29 +1,9 @@
-import { describe, expect, mock, test } from 'bun:test';
-import type { MarkdownToHtmlResult } from 'satteri';
+import { describe, expect, test } from 'bun:test';
+import type { Code } from 'mdast';
+import type { MarkdownToHtmlResult, MdastVisitorContext } from 'satteri';
 import { markdownToHtml } from 'satteri';
-import type { FenceContext, FenceMeta, PelePluginOptions } from '../src/types.js';
-
-if (Bun.env.SUPERLITE_REAL !== '1') {
-	mock.module('../src/core.js', () => ({
-		renderFenceToHtml: (
-			source: string,
-			_meta: FenceMeta,
-			_context: FenceContext,
-			options?: PelePluginOptions,
-		) => {
-			if (source === 'invalid' && options?.errorMode === 'placeholder') {
-				return '<pre class="pele-error" role="alert">Invalid diagram</pre>';
-			}
-			return `<figure class="pele-diagram"><svg><text>${source}</text></svg></figure>`;
-		},
-	}));
-	mock.module('../src/meta.js', () => ({
-		isPeleLang: (lang: string | null | undefined) => lang === 'mermaid' || lang === 'pele',
-		parseFenceMeta: () => ({ zoom: false }),
-	}));
-}
-
-const { satteriPele } = await import('../src/satteri.js');
+import { satteriPele } from '../src/satteri.js';
+import type { PelePluginOptions } from '../src/types.js';
 
 function process(markdown: string, options?: PelePluginOptions): string {
 	return (
@@ -52,5 +32,37 @@ describe('satteriPele', () => {
 	test('renders an error placeholder for invalid diagrams', () => {
 		const html = process('```mermaid\ninvalid\n```', { errorMode: 'placeholder' });
 		expect(html).toContain('class="pele-error"');
+		expect(html).toContain('No diagram type detected');
+	});
+
+	test('returns raw HTML without MDX expressions and forwards warning reports', () => {
+		const reports: Parameters<MdastVisitorContext['report']>[0][] = [];
+		const node: Code = {
+			type: 'code',
+			lang: 'mermaid',
+			meta: null,
+			value: 'invalid',
+			position: {
+				start: { line: 4, column: 1 },
+				end: { line: 6, column: 4 },
+			},
+		};
+		const result = satteriPele({ errorMode: 'warn' }).code?.(node, {
+			fileURL: new URL('file:///a.md'),
+			indexOf: () => 0,
+			report: (report: Parameters<MdastVisitorContext['report']>[0]) => reports.push(report),
+		} as unknown as MdastVisitorContext);
+
+		expect(result).toEqual({
+			raw: '<pre class="pele-error" role="alert">/a.md:4: No diagram type detected for the given text.</pre>',
+			mdxExpressions: false,
+		});
+		expect(reports).toEqual([
+			{
+				message: '/a.md:4: No diagram type detected for the given text.',
+				node,
+				severity: 'warning',
+			},
+		]);
 	});
 });
