@@ -9,13 +9,13 @@ Install the integration that matches your site.
 For Astro:
 
 ```sh
-bun add @pele-x/astro pele
+bun add astro-pele pele
 ```
 
 For Starlight:
 
 ```sh
-bun add @pele-x/starlight @pele-x/astro @pele-x/mdast pele
+bun add starlight-pele astro-pele mdast-pele pele
 ```
 
 Add the integration to your Astro or Starlight configuration, then write a Mermaid fence:

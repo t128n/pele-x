@@ -1,7 +1,7 @@
-import type { PelePluginOptions } from '@pele-x/mdast';
-import { remarkPele } from '@pele-x/mdast/remark';
-import { satteriPele } from '@pele-x/mdast/satteri';
 import type { AstroIntegration } from 'astro';
+import type { PelePluginOptions } from 'mdast-pele';
+import { remarkPele } from 'mdast-pele/remark';
+import { satteriPele } from 'mdast-pele/satteri';
 
 export interface AstroPeleOptions extends PelePluginOptions {}
 
@@ -31,7 +31,7 @@ export function resolveOptions(
 
 export function pele(options: AstroPeleOptions = {}): AstroIntegration {
 	return {
-		name: '@pele-x/astro',
+		name: 'astro-pele',
 		hooks: {
 			'astro:config:setup': ({ config, command, injectScript }) => {
 				const resolved = resolveOptions(command === 'sync' ? 'build' : command, options);
@@ -51,7 +51,7 @@ export function pele(options: AstroPeleOptions = {}): AstroIntegration {
 					injectedProcessors.add(processor);
 				}
 
-				if (resolved.zoom) injectScript('page', 'import "@pele-x/astro/zoom"');
+				if (resolved.zoom) injectScript('page', 'import "astro-pele/zoom"');
 			},
 		},
 	};

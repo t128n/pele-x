@@ -1,5 +1,5 @@
 {
-	"name": "@pele-x/starlight",
+	"name": "starlight-pele",
 	"version": "0.1.0",
 	"private": true,
 	"type": "module",
@@ -21,7 +21,7 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@pele-x/astro": "workspace:*"
+		"astro-pele": "workspace:*"
 	},
 	"peerDependencies": {
 		"@astrojs/starlight": "^0.42.0",

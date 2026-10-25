@@ -1,7 +1,7 @@
 import { unified } from '@astrojs/markdown-remark';
 import mdx from '@astrojs/mdx';
-import { pele } from '@pele-x/astro';
 import { defineConfig } from 'astro/config';
+import { pele } from 'astro-pele';
 
 const markdown = process.env.PELE_PROCESSOR === 'unified' ? { processor: unified() } : {};
 

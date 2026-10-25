@@ -4,10 +4,10 @@ title: Astro integration
 description: Add static Mermaid diagrams directly to an Astro site.
 ---
 
-Use `@pele-x/astro` when your site does not use Starlight. Add `pele()` to the integrations in `astro.config.mjs`:
+Use `astro-pele` when your site does not use Starlight. Add `pele()` to the integrations in `astro.config.mjs`:
 
 ```js
-import { pele } from '@pele-x/astro';
+import { pele } from 'astro-pele';
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
@@ -17,7 +17,7 @@ export default defineConfig({
 
 The integration supports Astro's default `satteri()` processor and the `unified()` processor from `@astrojs/markdown-remark`. It selects the matching adapter automatically.
 
-Import `@pele-x/astro/theme.css` for a neutral light and dark diagram theme. Then add a fence to any Markdown or MDX page:
+Import `astro-pele/theme.css` for a neutral light and dark diagram theme. Then add a fence to any Markdown or MDX page:
 
 ```mermaid title="Astro diagram"
 flowchart LR

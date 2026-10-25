@@ -3,9 +3,9 @@
 	"compilerOptions": {
 		"types": ["bun"],
 		"paths": {
-			"@pele-x/mdast": ["../mdast/src/index.ts"],
-			"@pele-x/mdast/remark": ["../mdast/src/remark.ts"],
-			"@pele-x/mdast/satteri": ["../mdast/src/satteri.ts"]
+			"mdast-pele": ["../mdast/src/index.ts"],
+			"mdast-pele/remark": ["../mdast/src/remark.ts"],
+			"mdast-pele/satteri": ["../mdast/src/satteri.ts"]
 		}
 	},
 	"include": ["src", "test"]

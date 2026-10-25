@@ -1,5 +1,5 @@
 {
-	"name": "@pele-x/astro",
+	"name": "astro-pele",
 	"version": "0.1.0",
 	"private": true,
 	"type": "module",
@@ -27,7 +27,7 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@pele-x/mdast": "workspace:*"
+		"mdast-pele": "workspace:*"
 	},
 	"peerDependencies": {
 		"astro": "^7.2.0",

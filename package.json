@@ -12,10 +12,10 @@
 		"examples/*"
 	],
 	"scripts": {
-		"build": "bun --filter @pele-x/mdast build && bun --filter @pele-x/astro build && bun --filter @pele-x/starlight build",
+		"build": "bun --filter mdast-pele build && bun --filter astro-pele build && bun --filter starlight-pele build",
 		"lint": "biome check .",
 		"format": "biome format --write .",
-		"typecheck": "bun --filter @pele-x/mdast typecheck && bun --filter @pele-x/astro typecheck && bun --filter @pele-x/starlight typecheck",
+		"typecheck": "bun --filter mdast-pele typecheck && bun --filter astro-pele typecheck && bun --filter starlight-pele typecheck",
 		"test": "bun test packages tests",
 		"test:e2e": "bun run scripts/e2e.ts",
 		"verify:packages": "bun run scripts/verify-dist.ts",

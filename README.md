@@ -6,11 +6,11 @@ Mermaid fences render to static, themeable SVG at build time. The browser gets n
 
 ## Packages
 
-| Package | Purpose |
-|---|---|
-| `@pele-x/mdast` | Core renderer plus remark and Sätteri adapters |
-| `@pele-x/astro` | Astro integration, `<Pele />` component, neutral theme and zoom script |
-| `@pele-x/starlight` | Starlight plugin and light/dark theme |
+| Package          | Purpose                                                                |
+| ---------------- | ---------------------------------------------------------------------- |
+| `mdast-pele`     | Core renderer plus remark and Sätteri adapters                         |
+| `astro-pele`     | Astro integration, `<Pele />` component, neutral theme and zoom script |
+| `starlight-pele` | Starlight plugin and light/dark theme                                  |
 
 The packages are private at `0.1.0` until the npm scope is set.
 
@@ -20,7 +20,7 @@ The packages are private at `0.1.0` until the npm scope is set.
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
-import starlightPele from '@pele-x/starlight';
+import starlightPele from 'starlight-pele';
 
 export default defineConfig({
 	integrations: [starlight({ title: 'Docs', plugins: [starlightPele()] })],
@@ -42,14 +42,14 @@ Add `zoom` to a fence for pan and zoom, or pass `starlightPele({ zoom: true })` 
 
 ```js
 import { defineConfig } from 'astro/config';
-import pele from '@pele-x/astro';
+import pele from 'astro-pele';
 
 export default defineConfig({
 	integrations: [pele()],
 });
 ```
 
-For plain remark or Sätteri pipelines, import `remarkPele` from `@pele-x/mdast/remark` or `satteriPele` from `@pele-x/mdast/satteri`.
+For plain remark or Sätteri pipelines, import `remarkPele` from `mdast-pele/remark` or `satteriPele` from `mdast-pele/satteri`.
 
 ## Development
 

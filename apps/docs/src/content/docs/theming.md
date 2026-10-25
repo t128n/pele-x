@@ -19,7 +19,7 @@ Pele diagrams use CSS variables, so colors can respond to the surrounding theme 
 
 ## Astro and Starlight
 
-`@pele-x/astro/theme.css` provides neutral light and dark palettes using `prefers-color-scheme`.
+`astro-pele/theme.css` provides neutral light and dark palettes using `prefers-color-scheme`.
 
 The Starlight plugin maps Pele variables to Starlight variables: `--pele-bg` to `--sl-color-bg`, `--pele-fg` to `--sl-color-text`, `--pele-muted` to `--sl-color-gray-3`, `--pele-line` to `--sl-color-gray-5`, `--pele-surface` to `--sl-color-bg-sidebar`, `--pele-surface-alt` to `--sl-color-bg-inline-code`, `--pele-border` to `--sl-color-hairline`, and `--pele-accent` to `--sl-color-accent`.
 

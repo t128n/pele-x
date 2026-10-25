@@ -12,11 +12,16 @@ describe('workspace foundation', () => {
 	});
 
 	test('contains all three publishable package manifests', () => {
-		for (const name of ['mdast', 'astro', 'starlight']) {
-			const manifestPath = resolve(root, 'packages', name, 'package.json');
+		const names = {
+			mdast: 'mdast-pele',
+			astro: 'astro-pele',
+			starlight: 'starlight-pele',
+		};
+		for (const [directory, name] of Object.entries(names)) {
+			const manifestPath = resolve(root, 'packages', directory, 'package.json');
 			expect(existsSync(manifestPath)).toBe(true);
 			const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
-			expect(manifest.name).toBe(`@pele-x/${name}`);
+			expect(manifest.name).toBe(name);
 			expect(manifest.version).toBe('0.1.0');
 			expect(manifest.private).toBe(true);
 		}
@@ -27,9 +32,9 @@ describe('workspace foundation', () => {
 			readFileSync(resolve(root, 'packages/astro/tsconfig.json'), 'utf8'),
 		);
 		expect(tsconfig.compilerOptions.paths).toEqual({
-			'@pele-x/mdast': ['../mdast/src/index.ts'],
-			'@pele-x/mdast/remark': ['../mdast/src/remark.ts'],
-			'@pele-x/mdast/satteri': ['../mdast/src/satteri.ts'],
+			'mdast-pele': ['../mdast/src/index.ts'],
+			'mdast-pele/remark': ['../mdast/src/remark.ts'],
+			'mdast-pele/satteri': ['../mdast/src/satteri.ts'],
 		});
 	});
 });

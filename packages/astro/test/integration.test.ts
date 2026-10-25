@@ -1,6 +1,6 @@
 import { describe, expect, mock, test } from 'bun:test';
-import { remarkPele } from '@pele-x/mdast/remark';
 import type { AstroIntegration } from 'astro';
+import { remarkPele } from 'mdast-pele/remark';
 import type { AstroPeleOptions } from '../src/index.js';
 import { pele, resolveOptions } from '../src/index.js';
 
@@ -63,10 +63,10 @@ describe('pele integration', () => {
 
 	test('injects the zoom module only when zoom is enabled', () => {
 		expect(setup(processor('satteri'), { zoom: true })).toEqual([
-			['page', 'import "@pele-x/astro/zoom"'],
+			['page', 'import "astro-pele/zoom"'],
 		]);
 		expect(setup(processor('satteri'), { zoom: 'marked' })).toEqual([
-			['page', 'import "@pele-x/astro/zoom"'],
+			['page', 'import "astro-pele/zoom"'],
 		]);
 		expect(setup(processor('satteri'), { zoom: false })).toEqual([]);
 	});

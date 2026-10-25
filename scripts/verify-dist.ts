@@ -3,19 +3,19 @@ import { resolve } from 'node:path';
 const root = resolve(import.meta.dir, '..');
 const packages = [
 	{
-		name: '@pele-x/mdast',
+		name: 'mdast-pele',
 		directory: 'mdast',
 		exports: ['./remark', './satteri'],
 		attw: ['--profile', 'esm-only'],
 	},
 	{
-		name: '@pele-x/astro',
+		name: 'astro-pele',
 		directory: 'astro',
 		exports: ['./zoom', './Pele.astro', './theme.css'],
 		attw: ['--profile', 'esm-only', '--exclude-entrypoints', 'theme.css', 'Pele.astro'],
 	},
 	{
-		name: '@pele-x/starlight',
+		name: 'starlight-pele',
 		directory: 'starlight',
 		exports: ['./theme.css'],
 		attw: ['--profile', 'esm-only', '--exclude-entrypoints', 'theme.css'],

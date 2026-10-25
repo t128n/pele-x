@@ -1,5 +1,5 @@
 {
-	"name": "@pele-x/mdast",
+	"name": "mdast-pele",
 	"version": "0.1.0",
 	"private": true,
 	"type": "module",

@@ -1,15 +1,15 @@
 import type { StarlightPlugin } from '@astrojs/starlight/types';
-import type { AstroPeleOptions } from '@pele-x/astro';
-import { pele } from '@pele-x/astro';
+import type { AstroPeleOptions } from 'astro-pele';
+import { pele } from 'astro-pele';
 
 export interface StarlightPeleOptions extends AstroPeleOptions {}
 
-const theme = '@pele-x/starlight/theme.css';
+const theme = 'starlight-pele/theme.css';
 const configured = new WeakSet<object>();
 
 export function starlightPele(options: StarlightPeleOptions = {}): StarlightPlugin {
 	return {
-		name: '@pele-x/starlight',
+		name: 'starlight-pele',
 		hooks: {
 			'config:setup': ({ config, addIntegration, updateConfig }) => {
 				if (!configured.has(config)) {

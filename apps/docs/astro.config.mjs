@@ -1,6 +1,6 @@
 import starlight from '@astrojs/starlight';
-import { starlightPele } from '@pele-x/starlight';
 import { defineConfig } from 'astro/config';
+import { starlightPele } from 'starlight-pele';
 
 export default defineConfig({
 	site: 'https://pele-x.example.com',

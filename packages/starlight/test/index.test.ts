@@ -4,7 +4,7 @@ import type { AstroIntegration } from 'astro';
 import { starlightPele } from '../src/index.js';
 
 type SetupOptions = Parameters<NonNullable<StarlightPlugin['hooks']['config:setup']>>[0];
-const theme = '@pele-x/starlight/theme.css';
+const theme = 'starlight-pele/theme.css';
 
 function setup(
 	plugin: StarlightPlugin,
@@ -29,8 +29,8 @@ describe('starlightPele', () => {
 		const plugin = starlightPele();
 		setup(plugin, config, integrations);
 
-		expect(plugin.name).toBe('@pele-x/starlight');
-		expect(integrations.map((integration) => integration.name)).toEqual(['@pele-x/astro']);
+		expect(plugin.name).toBe('starlight-pele');
+		expect(integrations.map((integration) => integration.name)).toEqual(['astro-pele']);
 		expect(config.customCss.at(-1)).toBe(theme);
 	});
 
