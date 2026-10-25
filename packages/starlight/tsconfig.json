@@ -1,7 +1,10 @@
 {
 	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
-		"types": ["bun"]
+		"types": ["bun"],
+		"paths": {
+			"@pele-x/astro": ["../astro/src/index.ts"]
+		}
 	},
 	"include": ["src", "test"]
 }
