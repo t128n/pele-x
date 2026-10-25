@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'bun:test';
+import { remarkPele } from '@pele-x/mdast/remark';
 import type { AstroIntegration } from 'astro';
 import type { AstroPeleOptions } from '../src/index.js';
 import { pele, resolveOptions } from '../src/index.js';
@@ -49,6 +50,11 @@ describe('pele integration', () => {
 
 		expect(markdownProcessor.options.remarkPlugins).toHaveLength(1);
 		expect(markdownProcessor.options.mdastPlugins).toHaveLength(0);
+		const entry = markdownProcessor.options.remarkPlugins[0];
+		expect(Array.isArray(entry)).toBe(true);
+		const [plugin, options] = entry as [typeof remarkPele, AstroPeleOptions];
+		expect(plugin).toBe(remarkPele);
+		expect(options).toEqual({ errorMode: 'throw' });
 	});
 
 	test('rejects unknown processors with a useful error', () => {

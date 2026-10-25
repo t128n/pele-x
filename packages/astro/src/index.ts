@@ -44,7 +44,7 @@ export function pele(options: AstroPeleOptions = {}): AstroIntegration {
 						processor.options.mdastPlugins.push(satteriPele(resolved));
 					} else if (processor.name === 'unified') {
 						processor.options.remarkPlugins ??= [];
-						processor.options.remarkPlugins.push(remarkPele(resolved));
+						processor.options.remarkPlugins.push([remarkPele, resolved]);
 					} else {
 						throw unsupportedProcessor();
 					}
