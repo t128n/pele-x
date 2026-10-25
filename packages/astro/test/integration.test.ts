@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'bun:test';
+import { describe, expect, mock, test } from 'bun:test';
 import { remarkPele } from '@pele-x/mdast/remark';
 import type { AstroIntegration } from 'astro';
 import type { AstroPeleOptions } from '../src/index.js';
@@ -65,6 +65,9 @@ describe('pele integration', () => {
 		expect(setup(processor('satteri'), { zoom: true })).toEqual([
 			['page', 'import "@pele-x/astro/zoom"'],
 		]);
+		expect(setup(processor('satteri'), { zoom: 'marked' })).toEqual([
+			['page', 'import "@pele-x/astro/zoom"'],
+		]);
 		expect(setup(processor('satteri'), { zoom: false })).toEqual([]);
 	});
 
@@ -73,8 +76,37 @@ describe('pele integration', () => {
 		const integration = pele();
 		setup(markdownProcessor, undefined, integration);
 		setup(markdownProcessor, undefined, integration);
+		setup(markdownProcessor, undefined, pele());
 
 		expect(markdownProcessor.options.mdastPlugins).toHaveLength(1);
+	});
+});
+
+describe('zoom module', () => {
+	test('enables zoom on diagrams with the zoom marker', async () => {
+		const enabled: object[] = [];
+		const markedElement = {};
+		let selector = '';
+		const globalDocument = globalThis as { document?: unknown };
+		const originalDocument = globalDocument.document;
+		mock.module('pele/core', () => ({
+			enableZoom: (element: object) => enabled.push(element),
+		}));
+		globalDocument.document = {
+			querySelectorAll(value: string) {
+				selector = value;
+				return [markedElement];
+			},
+		};
+
+		try {
+			await import('../src/zoom.js');
+			expect(selector).toBe('[data-pele-zoom]');
+			expect(enabled).toEqual([markedElement]);
+		} finally {
+			if (originalDocument === undefined) delete globalDocument.document;
+			else globalDocument.document = originalDocument;
+		}
 	});
 });
 
