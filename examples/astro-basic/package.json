@@ -1,0 +1,15 @@
+{
+	"name": "@pele-x/example-astro-basic",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview"
+	},
+	"dependencies": {
+		"@astrojs/mdx": "8.1.1",
+		"@pele-x/astro": "workspace:*",
+		"astro": "7.4.2"
+	}
+}

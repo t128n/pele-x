@@ -1,0 +1,49 @@
+{
+	"name": "pele-x",
+	"private": true,
+	"type": "module",
+	"packageManager": "bun@1.4.3",
+	"engines": {
+		"node": ">=22.23.4"
+	},
+	"workspaces": [
+		"packages/*",
+		"apps/*",
+		"examples/*"
+	],
+	"scripts": {
+		"build": "bun --filter @pele-x/mdast build && bun --filter @pele-x/astro build && bun --filter @pele-x/starlight build",
+		"lint": "biome check .",
+		"format": "biome format --write .",
+		"typecheck": "bun --filter @pele-x/mdast typecheck && bun --filter @pele-x/astro typecheck && bun --filter @pele-x/starlight typecheck",
+		"test": "bun test packages tests",
+		"test:e2e": "bun run scripts/e2e.ts",
+		"verify:packages": "bun run scripts/verify-dist.ts",
+		"check": "bun run lint && bun run typecheck && bun run test && bun run build && bun run test:e2e && bun run verify:packages",
+		"changeset": "changeset",
+		"release": "bun run build && changeset publish"
+	},
+	"devDependencies": {
+		"@arethetypeswrong/cli": "0.18.5",
+		"@astrojs/check": "0.9.12",
+		"@astrojs/markdown-remark": "7.3.1",
+		"@astrojs/markdown-satteri": "0.4.5",
+		"@astrojs/mdx": "8.1.1",
+		"@astrojs/starlight": "0.42.7",
+		"@biomejs/biome": "2.6.3",
+		"@changesets/cli": "3.0.3",
+		"@types/bun": "1.4.4",
+		"@types/node": "26.6.5",
+		"astro": "7.4.2",
+		"pele": "1.10.0",
+		"publint": "0.3.25",
+		"rehype-stringify": "10.0.0",
+		"remark-parse": "11.0.0",
+		"remark-rehype": "11.0.0",
+		"satteri": "0.10.5",
+		"tsdown": "0.23.2",
+		"typescript": "6.0.3",
+		"unified": "11.0.0",
+		"unist-util-visit": "5.0.0"
+	}
+}

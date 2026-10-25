@@ -1,0 +1,26 @@
+{
+	"name": "@pele-x/starlight",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./theme.css": "./theme.css"
+	},
+	"scripts": {
+		"build": "tsdown",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@pele-x/astro": "workspace:*"
+	},
+	"peerDependencies": {
+		"@astrojs/starlight": "^0.42.0",
+		"astro": "^7.2.0"
+	}
+}

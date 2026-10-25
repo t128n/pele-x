@@ -1,0 +1,31 @@
+{
+	"name": "@pele-x/astro",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./zoom": {
+			"types": "./dist/zoom.d.ts",
+			"import": "./dist/zoom.js"
+		},
+		"./Pele.astro": "./src/Pele.astro",
+		"./theme.css": "./theme.css"
+	},
+	"scripts": {
+		"build": "tsdown",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@pele-x/mdast": "workspace:*"
+	},
+	"peerDependencies": {
+		"astro": "^7.2.0",
+		"pele": "^1.10.0"
+	}
+}

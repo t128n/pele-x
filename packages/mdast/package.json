@@ -1,0 +1,30 @@
+{
+	"name": "@pele-x/mdast",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./remark": {
+			"types": "./dist/remark.d.ts",
+			"import": "./dist/remark.js"
+		},
+		"./satteri": {
+			"types": "./dist/satteri.d.ts",
+			"import": "./dist/satteri.js"
+		}
+	},
+	"scripts": {
+		"build": "tsdown",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"pele": "1.10.0",
+		"unist-util-visit": "5.0.0"
+	}
+}
