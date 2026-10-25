@@ -73,6 +73,7 @@ async function main(): Promise<void> {
 	const docs = resolve(root, 'apps/docs');
 	await build(docs, 'Documentation');
 	await expectText(resolve(docs, 'dist/index.html'), '<svg');
+	await expectText(resolve(docs, 'dist/reference/examples/index.html'), '<svg');
 	console.log('E2E checks passed');
 }
 

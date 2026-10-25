@@ -28,3 +28,5 @@ flowchart TD
 ```
 
 Production builds throw on invalid diagrams by default. During development, invalid diagrams render a readable placeholder instead.
+
+For a step-by-step introduction, see the [getting started tutorial](../tutorial/getting-started/).
