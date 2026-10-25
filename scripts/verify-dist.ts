@@ -2,9 +2,24 @@ import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dir, '..');
 const packages = [
-	{ name: '@pele-x/mdast', directory: 'mdast', exports: ['./remark', './satteri'] },
-	{ name: '@pele-x/astro', directory: 'astro', exports: ['./zoom', './Pele.astro', './theme.css'] },
-	{ name: '@pele-x/starlight', directory: 'starlight', exports: ['./theme.css'] },
+	{
+		name: '@pele-x/mdast',
+		directory: 'mdast',
+		exports: ['./remark', './satteri'],
+		attw: ['--profile', 'esm-only'],
+	},
+	{
+		name: '@pele-x/astro',
+		directory: 'astro',
+		exports: ['./zoom', './Pele.astro', './theme.css'],
+		attw: ['--profile', 'esm-only', '--exclude-entrypoints', 'theme.css', 'Pele.astro'],
+	},
+	{
+		name: '@pele-x/starlight',
+		directory: 'starlight',
+		exports: ['./theme.css'],
+		attw: ['--profile', 'esm-only', '--exclude-entrypoints', 'theme.css'],
+	},
 ] as const;
 
 let failures = 0;
@@ -24,8 +39,8 @@ async function assertFile(path: string): Promise<void> {
 	if (!(await Bun.file(path).exists())) throw new Error(`missing ${path}`);
 }
 
-async function run(command: string[]): Promise<void> {
-	const child = Bun.spawn({ cmd: command, cwd: root, stdout: 'inherit', stderr: 'inherit' });
+async function run(command: string[], cwd = root): Promise<void> {
+	const child = Bun.spawn({ cmd: command, cwd, stdout: 'inherit', stderr: 'inherit' });
 	const exitCode = await child.exited;
 	if (exitCode !== 0) throw new Error(`exit code ${exitCode}`);
 }
@@ -40,6 +55,7 @@ function targets(value: unknown): string[] {
 
 export async function verifyDist(): Promise<void> {
 	failures = 0;
+	await check('build', () => run(['bun', 'run', 'build']));
 	for (const pkg of packages) {
 		const relativeDirectory = `packages/${pkg.directory}`;
 		const directory = resolve(root, relativeDirectory);
@@ -62,9 +78,14 @@ export async function verifyDist(): Promise<void> {
 		}
 
 		await check(`${pkg.name} publint`, () => run(['bunx', 'publint', relativeDirectory]));
-		await check(`${pkg.name} attw`, () => run(['bunx', 'attw', '--pack', relativeDirectory]));
+		await check(`${pkg.name} attw`, () =>
+			run(['bunx', 'attw', '--pack', relativeDirectory, ...pkg.attw]),
+		);
 		await check(`${pkg.name} Node import`, () =>
-			run(['node', '--input-type=module', '-e', `await import('${pkg.name}')`]),
+			run(
+				['node', '--input-type=module', '-e', `await import('${pkg.name}')`],
+				resolve(root, 'apps/docs'),
+			),
 		);
 	}
 
