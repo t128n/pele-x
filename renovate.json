@@ -1,0 +1,34 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": ["config:recommended"],
+	"enabledManagers": ["bun"],
+	"timezone": "Etc/UTC",
+	"schedule": ["at any time"],
+	"prConcurrentLimit": 5,
+	"prHourlyLimit": 0,
+	"rebaseWhen": "behind-base-branch",
+	"packageRules": [
+		{
+			"description": "Only track Pele for now. Remove this rule to let Renovate manage the rest of the workspace.",
+			"matchPackageNames": ["!pele"],
+			"enabled": false
+		},
+		{
+			"description": "One PR per Pele release, including a changeset so the packages are release-ready.",
+			"matchDatasources": ["npm"],
+			"matchPackageNames": ["pele"],
+			"groupName": "Pele",
+			"groupSlug": "pele",
+			"prPriority": 10,
+			"addLabels": ["dependencies"],
+			"prBodyNotes": [
+				"This PR tracks the latest [Pele](https://www.npmjs.com/package/pele) release. Renovate adds a patch changeset for `mdast-pele`, `astro-pele` and `starlight-pele`, so merging this PR makes the update ready for the changesets release flow."
+			],
+			"postUpgradeTasks": {
+				"commands": ["node scripts/changeset-pele.mjs {{{newVersion}}}"],
+				"fileFilters": [".changeset/*.md"],
+				"executionMode": "update"
+			}
+		}
+	]
+}
