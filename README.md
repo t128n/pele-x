@@ -4,6 +4,8 @@ Astro, Starlight and mdast integrations for [Pele](https://pele.run), the fast M
 
 Mermaid fences render to static, themeable SVG at build time. The browser gets no Pele JavaScript unless you opt into pan and zoom.
 
+**Docs preview:** https://t128n.github.io/pele-x/
+
 ## Packages
 
 | Package          | Purpose                                                                |
