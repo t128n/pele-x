@@ -1,4 +1,5 @@
-import { beforeEach, describe, expect, test } from 'bun:test';
+import { beforeEach, describe, expect, spyOn, test } from 'bun:test';
+import * as pele from 'pele';
 import {
 	clearRenderCache,
 	diagramId,
@@ -117,5 +118,24 @@ describe('renderDiagram cache', () => {
 		expect(renderDiagram(source, { idPrefix: 'pele-direct' })).toEqual(
 			renderDiagram(source, { idPrefix: 'pele-direct' }),
 		);
+	});
+
+	test('reuses matching renders and evicts the oldest entry beyond the cap', () => {
+		const renderSpy = spyOn(pele, 'render');
+		try {
+			const first = renderFenceToHtml(source, { zoom: false }, { index: 0 });
+			expect(renderFenceToHtml(source, { zoom: false }, { index: 0 })).toBe(first);
+			expect(renderSpy).toHaveBeenCalledTimes(1);
+
+			for (let index = 1; index <= 100; index++) {
+				renderFenceToHtml(source, { zoom: false }, { index });
+			}
+			expect(renderSpy).toHaveBeenCalledTimes(101);
+
+			expect(renderFenceToHtml(source, { zoom: false }, { index: 0 })).toBe(first);
+			expect(renderSpy).toHaveBeenCalledTimes(102);
+		} finally {
+			renderSpy.mockRestore();
+		}
 	});
 });
