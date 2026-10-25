@@ -1,32 +1,25 @@
 ---
 
 title: Installation
-description: Install Pele x for Astro or Starlight and render your first diagram.
+description: Install Pele x for Astro or Starlight.
 ---
 
-Install the integration that matches your site.
+Pick the guide that matches your site. Each guide lists only the packages you install directly; transitive dependencies come in automatically.
 
-For Astro:
+For a Starlight site:
+
+```sh
+bun add starlight-pele pele
+```
+
+Follow [Get started with Starlight](../tutorial/getting-started-starlight/).
+
+For a plain Astro site:
 
 ```sh
 bun add astro-pele pele
 ```
 
-For Starlight:
-
-```sh
-bun add starlight-pele astro-pele mdast-pele pele
-```
-
-Add the integration to your Astro or Starlight configuration, then write a Mermaid fence:
-
-```mermaid title="Installation flow"
-flowchart TD
-	A[Install the package] --> B[Add the integration]
-	B --> C[Write a Mermaid fence]
-	C --> D[Build static SVG]
-```
+Follow [Get started with Astro](../tutorial/getting-started-astro/).
 
 Production builds throw on invalid diagrams by default. During development, invalid diagrams render a readable placeholder instead.
-
-For a step-by-step introduction, see the [getting started tutorial](../tutorial/getting-started/).

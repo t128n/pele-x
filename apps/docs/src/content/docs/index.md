@@ -18,7 +18,7 @@ Rendering diagrams during the build keeps pages fast. The browser does not downl
 
 ## Where Pele x fits
 
-- The [tutorial](./tutorial/getting-started/) is the best place to render your first diagram.
+- The [tutorials](./tutorial/getting-started-starlight/) are the best place to render your first diagram: [Starlight](./tutorial/getting-started-starlight/) or [Astro](./tutorial/getting-started-astro/).
 - The [how-to guides](./how-to/install/) cover installation, authoring, and theming for specific goals.
 - The [reference](./reference/starlight/) lists every integration option and the diagram gallery.
 - The [explanation](./explanation/troubleshooting/) section describes how rendering works and how to fix common problems.
