@@ -15,7 +15,8 @@ Publishing uses **npm trusted publishing with OIDC**. There is no `NPM_TOKEN` se
 - `mdast-pele@0.1.0`, `astro-pele@0.1.0` and `starlight-pele@0.1.0` are published.
 - Trusted publishers are configured for all three packages with `publish.yml`, repository `t128n/pele-x`, environment `npm`.
 - The first publish through OIDC must happen within **2 days** of configuring trust (by 2026-10-27), or the configuration expires. Cut a patch changeset and run `publish.yml` to validate it.
-- The `0.1.0` versions were published locally before trust was configured. Provenance is not available because the repository is private.
+- The repository is now public, so future OIDC publishes will include automatic provenance.
+- The `0.1.0` versions were published locally before trust was configured and before the repository became public. They have no provenance attestations; cut a patch release if you want the badge on the package.
 
 ## How it works
 
@@ -97,9 +98,11 @@ If you prefer the website, open each package on npmjs.com → **Settings** → *
 
    The workflow upgrades npm, runs `bun run check`, builds, publishes with OIDC, and pushes tags. No secret is read.
 
-## Provenance caveat
+## Provenance
 
-Trusted publishing works from a private repository, but npm **does not generate provenance attestations for private source repositories**. If you want the provenance badge and attestations on npm, make the repository public. Publishing itself works either way.
+The repository is public now. Trusted publishing from GitHub Actions generates provenance attestations automatically for future releases; no `--provenance` flag is needed.
+
+`0.1.0` was published locally before trusted publishing was configured and before the repository became public, so it has no attestations. Publish a patch release through `publish.yml` to get the provenance badge on npm.
 
 ## Security after setup
 
