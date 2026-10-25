@@ -1,0 +1,38 @@
+:root {
+	--pele-bg: var(--sl-color-bg);
+	--pele-fg: var(--sl-color-text);
+	--pele-muted: var(--sl-color-gray-3);
+	--pele-line: var(--sl-color-gray-5);
+	--pele-surface: var(--sl-color-bg-sidebar);
+	--pele-surface-alt: var(--sl-color-bg-inline-code);
+	--pele-border: var(--sl-color-hairline);
+	--pele-accent: var(--sl-color-accent);
+}
+
+.pele-diagram {
+	margin: 1.5rem 0;
+	overflow-x: auto;
+}
+
+.pele-diagram svg {
+	display: block;
+	max-width: 100%;
+	height: auto;
+	margin-inline: auto;
+}
+
+.pele-diagram figcaption {
+	margin-top: 0.75rem;
+	color: var(--pele-muted);
+	font-size: 0.875rem;
+	text-align: center;
+}
+
+.pele-error {
+	padding: 1rem;
+	border: 1px solid var(--pele-border);
+	border-radius: var(--pele-radius, 4px);
+	background: var(--pele-surface);
+	color: var(--pele-fg);
+	white-space: pre-wrap;
+}
