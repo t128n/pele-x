@@ -3,7 +3,10 @@
 	"compilerOptions": {
 		"types": ["bun"],
 		"paths": {
-			"@pele-x/astro": ["../astro/src/index.ts"]
+			"@pele-x/astro": ["../astro/src/index.ts"],
+			"@pele-x/mdast": ["../mdast/src/index.ts"],
+			"@pele-x/mdast/remark": ["../mdast/src/remark.ts"],
+			"@pele-x/mdast/satteri": ["../mdast/src/satteri.ts"]
 		}
 	},
 	"include": ["src", "test"]
