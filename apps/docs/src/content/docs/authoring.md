@@ -1,4 +1,5 @@
 ---
+
 title: Authoring diagrams
 description: Write Mermaid fences, add captions and zoom, and control rendering errors.
 ---

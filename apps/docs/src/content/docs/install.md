@@ -1,4 +1,5 @@
 ---
+
 title: Installation
 description: Install Pele x for Astro or Starlight and render your first diagram.
 ---

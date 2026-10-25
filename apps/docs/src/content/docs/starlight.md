@@ -1,4 +1,5 @@
 ---
+
 title: Starlight plugin
 description: Add static Mermaid diagrams and Starlight theming with one plugin.
 ---

@@ -1,4 +1,5 @@
 ---
+
 title: Pele x
 description: Render Mermaid diagrams as static, themeable SVG in Astro and Starlight.
 ---

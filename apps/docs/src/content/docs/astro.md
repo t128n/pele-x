@@ -1,4 +1,5 @@
 ---
+
 title: Astro integration
 description: Add static Mermaid diagrams directly to an Astro site.
 ---

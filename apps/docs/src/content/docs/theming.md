@@ -1,20 +1,21 @@
 ---
+
 title: Theming
 description: Customize diagram colors and surfaces with CSS variables.
 ---
 
 Pele diagrams use CSS variables, so colors can respond to the surrounding theme without rendering the SVG again.
 
-| Variable | Controls |
-| --- | --- |
-| `--pele-bg` | Diagram background |
-| `--pele-fg` | Primary text and foreground |
-| `--pele-muted` | Secondary text |
-| `--pele-line` | Connectors and lines |
-| `--pele-surface` | Node surfaces |
-| `--pele-surface-alt` | Alternate surfaces |
-| `--pele-border` | Borders and outlines |
-| `--pele-accent` | Accent elements |
+| Variable             | Controls                    |
+| -------------------- | --------------------------- |
+| `--pele-bg`          | Diagram background          |
+| `--pele-fg`          | Primary text and foreground |
+| `--pele-muted`       | Secondary text              |
+| `--pele-line`        | Connectors and lines        |
+| `--pele-surface`     | Node surfaces               |
+| `--pele-surface-alt` | Alternate surfaces          |
+| `--pele-border`      | Borders and outlines        |
+| `--pele-accent`      | Accent elements             |
 
 ## Astro and Starlight
 
