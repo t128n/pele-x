@@ -14,7 +14,7 @@ Mermaid fences render to static, themeable SVG at build time. The browser gets n
 | `astro-pele`     | Astro integration, `<Pele />` component, neutral theme and zoom script |
 | `starlight-pele` | Starlight plugin and light/dark theme                                  |
 
-Published as `mdast-pele`, `astro-pele`, and `starlight-pele`. See [RELEASING.md](./RELEASING.md) for the release process.
+Published as `mdast-pele`, `astro-pele`, and `starlight-pele`.
 
 ## Starlight
 

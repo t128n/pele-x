@@ -2,38 +2,32 @@
 	"name": "mdast-pele",
 	"version": "0.1.0",
 	"description": "Render Mermaid fences to static SVG with Pele in remark and Sätteri pipelines.",
-	"license": "MIT",
-	"type": "module",
 	"keywords": [
+		"diagrams",
+		"markdown",
 		"mdast",
-		"remark",
-		"satteri",
 		"mermaid",
 		"pele",
-		"svg",
-		"diagrams",
-		"markdown"
+		"remark",
+		"satteri",
+		"svg"
 	],
 	"homepage": "https://t128n.github.io/pele-x/",
+	"bugs": {
+		"url": "https://github.com/t128n/pele-x/issues"
+	},
+	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/t128n/pele-x.git",
 		"directory": "packages/mdast"
-	},
-	"bugs": {
-		"url": "https://github.com/t128n/pele-x/issues"
 	},
 	"files": [
 		"dist",
 		"README.md",
 		"LICENSE"
 	],
-	"publishConfig": {
-		"access": "public"
-	},
-	"engines": {
-		"node": ">=20"
-	},
+	"type": "module",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"exports": {
@@ -50,6 +44,9 @@
 			"import": "./dist/satteri.js"
 		}
 	},
+	"publishConfig": {
+		"access": "public"
+	},
 	"scripts": {
 		"build": "tsdown",
 		"typecheck": "tsc --noEmit"
@@ -59,5 +56,8 @@
 		"@types/unist": "3.0.3",
 		"pele": "1.10.0",
 		"unist-util-visit": "5.0.0"
+	},
+	"engines": {
+		"node": ">=20"
 	}
 }

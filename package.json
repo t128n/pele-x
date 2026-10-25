@@ -1,25 +1,22 @@
 {
 	"name": "pele-x",
 	"private": true,
-	"type": "module",
-	"packageManager": "bun@1.4.3",
-	"engines": {
-		"node": ">=22.23.4"
-	},
 	"workspaces": [
 		"packages/*",
 		"apps/*",
 		"examples/*"
 	],
+	"type": "module",
 	"scripts": {
 		"build": "bun --filter mdast-pele build && bun --filter astro-pele build && bun --filter starlight-pele build",
-		"lint": "biome check .",
-		"format": "biome format --write .",
+		"lint": "oxlint .",
+		"format": "oxfmt .",
+		"format:check": "oxfmt --check .",
 		"typecheck": "bun --filter mdast-pele typecheck && bun --filter astro-pele typecheck && bun --filter starlight-pele typecheck",
 		"test": "bun test packages tests",
 		"test:e2e": "bun run scripts/e2e.ts",
 		"verify:packages": "bun run scripts/verify-dist.ts",
-		"check": "bun run lint && bun run typecheck && bun run test && bun run build && bun run test:e2e && bun run verify:packages",
+		"check": "bun run format:check && bun run lint && bun run typecheck && bun run test && bun run build && bun run test:e2e && bun run verify:packages",
 		"changeset": "changeset",
 		"version": "changeset version",
 		"release": "bun run build && changeset publish"
@@ -31,13 +28,14 @@
 		"@astrojs/markdown-satteri": "0.4.5",
 		"@astrojs/mdx": "8.1.1",
 		"@astrojs/starlight": "0.42.7",
-		"@biomejs/biome": "2.6.3",
 		"@changesets/cli": "3.0.3",
 		"@types/bun": "1.4.4",
 		"@types/mdast": "4.0.4",
 		"@types/node": "26.6.5",
 		"@types/unist": "3.0.3",
 		"astro": "7.4.2",
+		"oxfmt": "0.74.0",
+		"oxlint": "1.89.0",
 		"pele": "1.10.0",
 		"publint": "0.3.25",
 		"rehype-stringify": "10.0.0",
@@ -48,5 +46,9 @@
 		"typescript": "6.0.3",
 		"unified": "11.0.0",
 		"unist-util-visit": "5.0.0"
-	}
+	},
+	"engines": {
+		"node": ">=22.23.4"
+	},
+	"packageManager": "bun@1.4.3"
 }
