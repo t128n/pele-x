@@ -2,14 +2,6 @@ name: Publish packages
 
 on:
   workflow_dispatch:
-    inputs:
-      auth:
-        description: npm authentication
-        type: choice
-        options:
-          - trusted-publishing
-          - token
-        default: trusted-publishing
 
 permissions:
   contents: write
@@ -31,25 +23,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Ensure npm supports trusted publishing
+        run: |
+          npm install --global npm@^11.5.1
+          npm --version
       - run: bun install --frozen-lockfile
       - run: bun run check
-      - name: Configure npm token
-        if: inputs.auth == 'token'
-        run: |
-          echo "registry=https://registry.npmjs.org/" >> ~/.npmrc
-          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Publish with trusted publishing
-        if: inputs.auth == 'trusted-publishing'
+      - name: Publish with OIDC
         run: bun run release
-        env:
-          NPM_CONFIG_PROVENANCE: true
-      - name: Publish with npm token
-        if: inputs.auth == 'token'
-        run: bun run release
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
       - name: Push release tags
         run: git push --tags
