@@ -14,7 +14,10 @@ export default defineConfig({
 				{ label: 'Pele x', link: '/' },
 				{
 					label: 'Tutorial',
-					items: [{ label: 'Getting started', slug: 'tutorial/getting-started' }],
+					items: [
+						{ label: 'Get started with Starlight', slug: 'tutorial/getting-started-starlight' },
+						{ label: 'Get started with Astro', slug: 'tutorial/getting-started-astro' },
+					],
 				},
 				{
 					label: 'How-to guides',
