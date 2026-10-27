@@ -1,45 +1,39 @@
 # Dependency updates
 
-Renovate tracks the npm release of [`pele`](https://www.npmjs.com/package/pele) and opens one grouped pull request for each new version. The pull request updates every `pele` declaration in the workspace, refreshes `bun.lock`, and adds a patch changeset for all three packages so the existing changesets flow can ship the update.
+A GitHub Actions workflow tracks the npm release of [`pele`](https://www.npmjs.com/package/pele) and opens one pull request for each new version. The pull request updates the exact `pele` pins in the root and `packages/mdast`, refreshes `bun.lock`, and adds a patch changeset for all three packages so the existing changesets flow can ship the update.
 
-The workflow lives in `.github/workflows/renovate.yml`. It checks for new releases every hour and can also be started from **Actions -> Renovate -> Run workflow**. The first run creates a Dependency Dashboard issue, where you can see pending updates and trigger a run.
-
-## One-time setup
-
-Create a fine-grained personal access token with access to `t128n/pele-x` and these permissions:
-
-- **Contents:** Read and write
-- **Pull requests:** Read and write
-- **Issues:** Read and write (for the dependency dashboard)
-- **Metadata:** Read-only (added automatically)
-
-If Renovate logs a permission error while reading CI status, also add **Checks:** Read-only.
-
-Add the token as the `RENOVATE_TOKEN` repository secret under **Settings -> Secrets and variables -> Actions**. Treat it as sensitive: it can push branches and open pull requests in this repository. Fine-grained tokens expire, so rotate the secret before the expiry date.
-
-Do not use the default `GITHUB_TOKEN` for Renovate. Pull requests created with `GITHUB_TOKEN` do not start CI, so the update would not be validated before merging.
-
-If you prefer a classic token, the `repo` scope is enough for the current configuration. Add `workflow` only if you later enable the `github-actions` manager.
+The workflow lives in `.github/workflows/update-pele.yml`. It checks npm every hour and can also be started from **Actions -> Update Pele -> Run workflow**.
 
 ## What a Pele update looks like
 
-- A `renovate/pele-*` branch with a commit that updates `package.json` files and `bun.lock`. The workflow sets `RENOVATE_BINARY_SOURCE=install` so Renovate can fetch Bun inside its container and refresh the lockfile.
-- A `.changeset/pele.md` file that requests a patch release for `mdast-pele`, `astro-pele`, and `starlight-pele`.
-- A pull request labeled `dependencies` (create the label once if you want it applied).
-- The normal CI workflow runs `bun run check` because the pull request is created with the token, not `GITHUB_TOKEN`.
+1. `npm view pele version` is compared with `devDependencies.pele` in the root `package.json`. The run stops when npm is not newer.
+2. The root and `packages/mdast` pins are updated, `bun install` refreshes `bun.lock`, and `scripts/changeset-pele.mjs` writes `.changeset/pele.md`.
+3. The change is committed to a `pele/<version>` branch. The pull request is opened by `github-actions[bot]`.
+4. The workflow dispatches `ci.yml` on that branch and waits for `bun run check` to pass. A pull request created with `GITHUB_TOKEN` does not start CI automatically, so the dispatch is explicit.
+5. Patch and minor updates are squash-merged. Major updates are left open for a human, because the changeset and release may need a different bump.
+6. The merge uses `GITHUB_TOKEN`, whose push event does not start other workflows. The workflow therefore dispatches `release.yml` and `pages.yml` explicitly after merging.
 
-The changeset requests a patch bump for all three packages. If a Pele major release needs a different bump, edit `.changeset/pele.md` in the pull request.
+If CI fails, the workflow leaves the pull request open and comments on it.
 
-After merging:
+The changeset requests a patch bump for all three packages. If a Pele major release needs a different bump, edit `.changeset/pele.md` in the pull request before merging it.
 
-1. The **Version packages** workflow opens or updates its release pull request from the changeset.
+After a Pele update lands:
+
+1. The dispatched **Version packages** workflow opens or updates its release pull request from the changeset.
 2. Merge the release pull request.
 3. Run the **Publish packages** workflow to publish with OIDC.
 
+## Repository settings
+
+The workflow only uses the built-in `GITHUB_TOKEN`; no personal access token is required. These settings matter:
+
+- **Settings -> Actions -> General -> Workflow permissions -> Allow GitHub Actions to create and approve pull requests** must be enabled. The **Version packages** workflow uses it to open the release pull request.
+- **Settings -> General -> Pull requests -> Allow auto-merge** is enabled for manual use, but the updater does not depend on GitHub's native auto-merge. It waits for the dispatched CI run and merges the pull request itself.
+
+No required status check is configured. If you add branch protection later, make sure the **Version packages** pull request can satisfy it; that pull request is created with `GITHUB_TOKEN` and does not start CI automatically.
+
 ## Scope and tuning
 
-`enabledManagers` and the `!pele` rule keep the bot focused on Pele. Remove the `!pele` rule to let Renovate manage the rest of the workspace. If you also enable the `github-actions` manager, give the token the `workflow` scope and remove the `enabledManagers` restriction.
+The workflow only tracks `pele`. To pause it, disable `.github/workflows/update-pele.yml` or remove its schedule. To change the cadence, edit the `cron` expression.
 
-The changeset is written by `scripts/changeset-pele.mjs` through Renovate's `postUpgradeTasks`. That only works with self-hosted Renovate, as configured here. The Mend-hosted Renovate app blocks post-upgrade commands, so it would open the dependency pull request without the changeset.
-
-To pause the bot, disable the workflow or remove the secret. To tune the cadence, edit the `cron` schedule in `.github/workflows/renovate.yml`.
+The former Renovate setup is gone: `renovate.json`, `.github/workflows/renovate.yml`, the `RENOVATE_TOKEN` secret, and the Dependency Dashboard issues are no longer needed. The `scripts/changeset-pele.mjs` helper and its test are still used.

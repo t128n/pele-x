@@ -1,0 +1,158 @@
+name: Update Pele
+
+on:
+  schedule:
+    # Check npm for a new Pele release every hour.
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  actions: write
+
+concurrency:
+  group: update-pele
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Find the latest Pele release
+        id: version
+        run: |
+          current="$(jq -r '.devDependencies.pele // empty' package.json)"
+          latest="$(npm view pele version)"
+          if [ -z "$current" ] || [ -z "$latest" ]; then
+            echo "::error::Could not read the current or latest Pele version."
+            exit 1
+          fi
+          if [ "$current" = "$latest" ]; then
+            echo "Pele is already at $current."
+            echo "update=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if ! bun -e 'process.exit(Bun.semver.order(process.argv[1], process.argv[2]) > 0 ? 0 : 1)' "$latest" "$current"; then
+            echo "Pele $latest is not newer than $current; nothing to do."
+            echo "update=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "Pele $current -> $latest"
+          echo "update=true" >> "$GITHUB_OUTPUT"
+          echo "version=$latest" >> "$GITHUB_OUTPUT"
+          echo "current=$current" >> "$GITHUB_OUTPUT"
+          echo "major=$(printf '%s' "$latest" | cut -d. -f1)" >> "$GITHUB_OUTPUT"
+          echo "current_major=$(printf '%s' "$current" | cut -d. -f1)" >> "$GITHUB_OUTPUT"
+
+      - name: Update Pele and add a changeset
+        if: steps.version.outputs.update == 'true'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          node -e '
+            const fs = require("node:fs");
+            for (const [file, section] of [
+              ["package.json", "devDependencies"],
+              ["packages/mdast/package.json", "dependencies"],
+            ]) {
+              const json = JSON.parse(fs.readFileSync(file, "utf8"));
+              json[section].pele = process.env.VERSION;
+              fs.writeFileSync(file, JSON.stringify(json, null, "\t") + "\n");
+            }
+          '
+          bun install
+          node scripts/changeset-pele.mjs "$VERSION"
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "::error::Updating Pele to $VERSION produced no changes."
+            exit 1
+          fi
+
+      - name: Open the update pull request
+        if: steps.version.outputs.update == 'true'
+        id: pr
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+          CURRENT: ${{ steps.version.outputs.current }}
+        run: |
+          branch="pele/$VERSION"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add package.json packages/mdast/package.json bun.lock .changeset/pele.md
+          git commit -m "fix(deps): update pele to $VERSION"
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+            git fetch origin "+refs/heads/$branch:refs/remotes/origin/$branch"
+            git push origin "HEAD:$branch" --force-with-lease
+          else
+            git push origin "HEAD:$branch"
+          fi
+
+          pr="$(gh pr list --head "$branch" --state open --json number --jq '.[0].number // empty')"
+          if [ -z "$pr" ]; then
+            pr_url="$(gh pr create --base main --head "$branch" \
+              --title "fix(deps): update pele to $VERSION" \
+              --body "Updates \`pele\` from \`$CURRENT\` to \`$VERSION\` in the root and \`packages/mdast\`, refreshes \`bun.lock\`, and adds a patch changeset for \`mdast-pele\`, \`astro-pele\` and \`starlight-pele\`.
+
+          Release notes: https://github.com/obsidianmd/pele/releases")"
+            pr="${pr_url##*/}"
+          fi
+          echo "number=$pr" >> "$GITHUB_OUTPUT"
+
+      - name: Run CI on the update
+        if: steps.version.outputs.update == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+          PR: ${{ steps.pr.outputs.number }}
+        run: |
+          branch="pele/$VERSION"
+          before="$(gh run list --workflow ci.yml --branch "$branch" --limit 1 --json databaseId --jq '.[0].databaseId // empty')"
+          gh workflow run ci.yml --ref "$branch"
+          run_id=""
+          for _ in $(seq 1 30); do
+            run_id="$(gh run list --workflow ci.yml --branch "$branch" --limit 1 --json databaseId --jq '.[0].databaseId // empty')"
+            if [ -n "$run_id" ] && [ "$run_id" != "$before" ]; then
+              break
+            fi
+            sleep 5
+          done
+          if [ -z "$run_id" ] || [ "$run_id" = "$before" ]; then
+            echo "::error::CI did not start for $branch."
+            exit 1
+          fi
+          if ! gh run watch "$run_id" --exit-status --interval 15; then
+            gh pr comment "$PR" --body "CI failed for this update; leaving it open for review."
+            exit 1
+          fi
+
+      - name: Merge patch and minor updates
+        if: steps.version.outputs.update == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+          PR: ${{ steps.pr.outputs.number }}
+          MAJOR: ${{ steps.version.outputs.major }}
+          CURRENT_MAJOR: ${{ steps.version.outputs.current_major }}
+        run: |
+          if [ "$MAJOR" != "$CURRENT_MAJOR" ]; then
+            gh pr comment "$PR" --body "Major update: review the changeset bump and merge manually."
+            echo "Left Pele $VERSION open for review."
+            exit 0
+          fi
+          git switch --detach origin/main
+          gh pr merge "$PR" --squash --delete-branch
+          # GITHUB_TOKEN events do not start workflows, so start them explicitly.
+          gh workflow run release.yml --ref main
+          gh workflow run pages.yml --ref main
