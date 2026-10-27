@@ -71,7 +71,7 @@ bun run --cwd apps/docs dev
 
 The Starlight documentation site lives in `apps/docs`; the end-to-end fixture is `examples/astro-basic`.
 
-Renovate tracks new [Pele](https://www.npmjs.com/package/pele) releases and opens grouped pull requests. See [docs/dependency-updates.md](docs/dependency-updates.md) for setup and release flow.
+An hourly GitHub Actions workflow tracks new [Pele](https://www.npmjs.com/package/pele) releases, runs CI on the update, and merges patch and minor releases. See [docs/dependency-updates.md](docs/dependency-updates.md) for the flow and repository settings.
 
 ## Layout
 
