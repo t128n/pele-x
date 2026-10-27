@@ -35,6 +35,16 @@ describe('renderFenceToHtml', () => {
 		).toThrow('a.md:3');
 	});
 
+	test('maps errors on later fence lines to their document line', () => {
+		expect(() =>
+			renderFenceToHtml(
+				'flowchart LR\n A-->B\n B -->',
+				{ zoom: false },
+				{ fileURL: 'a.md', index: 0, line: 10 },
+			),
+		).toThrow('a.md:13');
+	});
+
 	test('escapes captions and error placeholders', () => {
 		const captioned = renderFenceToHtml(
 			source,
