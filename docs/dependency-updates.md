@@ -21,6 +21,14 @@ Do not use the default `GITHUB_TOKEN` for Renovate. Pull requests created with `
 
 If you prefer a classic token, the `repo` scope is enough for the current configuration. Add `workflow` only if you later enable the `github-actions` manager.
 
+### Pull request identity
+
+Renovate authenticates with `RENOVATE_TOKEN`, so its pull requests and commits are authored by the token owner. A self-hosted Renovate Action cannot use the `renovate[bot]` identity: that bot belongs to Mend's hosted app, which does not run `postUpgradeTasks`.
+
+The built-in `GITHUB_TOKEN` would make the author `github-actions[bot]`, but GitHub does not start workflows for events caused by `GITHUB_TOKEN`. Renovate pull requests would get no CI run, so native auto-merge could not wait for the `check` status.
+
+For a bot identity while keeping the self-hosted setup, create a GitHub App with **Contents**, **Pull requests** and **Issues** read/write plus **Checks** read-only, install it on this repository, and store its ID and private key as `RENOVATE_APP_ID` and `RENOVATE_APP_PRIVATE_KEY`. Mint an installation token with `actions/create-github-app-token` and pass it to both the Renovate Action and `changesets/action` in `release.yml`. Pull requests and commits then appear as `<app-name>[bot]`.
+
 ## What a Pele update looks like
 
 - A `renovate/pele-*` branch with a commit that updates `package.json` files and `bun.lock`. The workflow sets `RENOVATE_BINARY_SOURCE=install` so Renovate can fetch Bun inside its container and refresh the lockfile.
@@ -29,6 +37,17 @@ If you prefer a classic token, the `repo` scope is enough for the current config
 - The normal CI workflow runs `bun run check` because the pull request is created with the token, not `GITHUB_TOKEN`.
 
 The changeset requests a patch bump for all three packages. If a Pele major release needs a different bump, edit `.changeset/pele.md` in the pull request.
+
+## Automerge
+
+Patch and minor Pele updates enable GitHub's native auto-merge once the required `check` status passes. Majors still need a human, and merges are squashed to match the existing history.
+
+The repository needs two settings, both one-time:
+
+1. **Settings -> General -> Pull requests -> Allow auto-merge** must be enabled.
+2. A branch ruleset on `main` must require the `check` status, without requiring branches to be up to date. Without a required check, GitHub may merge before CI starts.
+
+The **Version packages** workflow also uses `RENOVATE_TOKEN` for `changesets/action`, so its release pull request starts CI and can satisfy the same required check.
 
 After merging:
 

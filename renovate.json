@@ -29,6 +29,15 @@
 				"fileFilters": [".changeset/*.md"],
 				"executionMode": "update"
 			}
+		},
+		{
+			"description": "Automerge patch and minor Pele updates once CI passes. Majors stay manual.",
+			"matchDatasources": ["npm"],
+			"matchPackageNames": ["pele"],
+			"matchUpdateTypes": ["patch", "minor"],
+			"automerge": true,
+			"platformAutomerge": true,
+			"automergeStrategy": "squash"
 		}
 	]
 }

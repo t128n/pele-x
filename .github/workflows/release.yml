@@ -37,4 +37,6 @@ jobs:
           commit: 'chore: version packages'
           title: 'chore: version packages'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Use the automation token so the version PR starts CI; events from
+          # GITHUB_TOKEN do not trigger workflows, and main requires the check.
+          GITHUB_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
