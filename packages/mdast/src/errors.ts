@@ -20,10 +20,11 @@ export function escapeHtml(value: string): string {
 
 export function formatError(error: unknown, context: FenceContext): string {
 	const message = error instanceof Error ? error.message : String(error);
+	// Pele reports 1-based lines inside the fence body; `context.line` is the fence's opening line.
 	const errorLine = error instanceof PeleError && error.line > 0 ? error.line : undefined;
 	const line =
 		context.line !== undefined && errorLine !== undefined
-			? context.line + errorLine - 1
+			? context.line + errorLine
 			: (context.line ?? errorLine);
 	const location = context.fileURL
 		? `${context.fileURL}${line === undefined ? '' : `:${line}`}`
