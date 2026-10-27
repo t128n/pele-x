@@ -19,9 +19,20 @@ The changeset requests a patch bump for all three packages. If a Pele major rele
 
 After a Pele update lands:
 
-1. The dispatched **Version packages** workflow opens or updates its release pull request from the changeset.
+1. The dispatched **Version packages** workflow opens or updates its release pull request from the changeset. The `version` script runs `changeset version` and then `bun install`, so the pull request also refreshes `bun.lock` with the new workspace versions.
 2. Merge the release pull request.
 3. Run the **Publish packages** workflow to publish with OIDC.
+
+## Publishing workspace packages
+
+The packages depend on each other with `workspace:*`. Changesets leaves that protocol in place, and `npm publish` uploads it verbatim, which makes the published packages uninstallable. `bun run release` therefore uses `scripts/publish.ts` instead of `changeset publish`:
+
+1. `changeset publish-plan` lists the unpublished packages and orders them by dependency.
+2. `bun pm pack` packs each package; Bun replaces every `workspace:*` range with the workspace package version.
+3. `npm publish <tarball>` uploads the packed tarball, keeping OIDC trusted publishing and provenance.
+4. The script creates the `name@version` git tag for each published package.
+
+`bun run verify:pack` packs every publishable package and fails when a packed manifest still contains a `workspace:` range, when a packed version differs from the workspace version, or when an internal dependency version does not match the workspace package. It runs as part of `bun run check`, so CI and the publish workflow catch a stale `bun.lock` or a regression before anything reaches npm.
 
 ## Repository settings
 

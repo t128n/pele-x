@@ -51,7 +51,7 @@
     },
     "packages/astro": {
       "name": "astro-pele",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "dependencies": {
         "mdast-pele": "workspace:*",
       },
@@ -62,7 +62,7 @@
     },
     "packages/mdast": {
       "name": "mdast-pele",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "dependencies": {
         "@types/mdast": "4.0.4",
         "@types/unist": "3.0.3",
@@ -72,7 +72,7 @@
     },
     "packages/starlight": {
       "name": "starlight-pele",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "dependencies": {
         "astro-pele": "workspace:*",
       },
