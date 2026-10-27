@@ -15,11 +15,13 @@
 		"typecheck": "bun --filter mdast-pele typecheck && bun --filter astro-pele typecheck && bun --filter starlight-pele typecheck",
 		"test": "bun test packages tests",
 		"test:e2e": "bun run scripts/e2e.ts",
+		"verify:pack": "bun run scripts/verify-pack.ts",
 		"verify:packages": "bun run scripts/verify-dist.ts",
-		"check": "bun run format:check && bun run lint && bun run typecheck && bun run test && bun run build && bun run test:e2e && bun run verify:packages",
+		"check": "bun run format:check && bun run lint && bun run typecheck && bun run test && bun run build && bun run verify:pack && bun run test:e2e && bun run verify:packages",
 		"changeset": "changeset",
-		"version": "changeset version",
-		"release": "bun run build && changeset publish"
+		"version": "changeset version && bun install",
+		"publish:packages": "bun run scripts/publish.ts",
+		"release": "bun run build && bun run publish:packages"
 	},
 	"devDependencies": {
 		"@arethetypeswrong/cli": "0.18.5",
