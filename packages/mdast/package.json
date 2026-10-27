@@ -1,6 +1,6 @@
 {
 	"name": "mdast-pele",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Render Mermaid fences to static SVG with Pele in remark and Sätteri pipelines.",
 	"keywords": [
 		"diagrams",
