@@ -1,6 +1,16 @@
 name: Publish packages
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/**'
+      - 'package.json'
+      - 'bun.lock'
+      - '.changeset/**'
+      - 'scripts/publish.ts'
+      - 'scripts/verify-pack.ts'
+      - '.github/workflows/publish.yml'
   workflow_dispatch:
 
 permissions:
@@ -12,7 +22,26 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      publish: ${{ steps.plan.outputs.publish }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.3
+      - run: bun install --frozen-lockfile
+      - name: Check for unpublished packages
+        id: plan
+        run: |
+          bunx changeset publish-plan --output publish-plan.json
+          publish=$(bun -e "Bun.file('publish-plan.json').json().then(plan => console.log(plan.plan.length > 0))")
+          echo "publish=$publish" >> "$GITHUB_OUTPUT"
+
   publish:
+    needs: plan
+    if: needs.plan.outputs.publish == 'true'
     runs-on: ubuntu-latest
     environment: npm
     steps:
@@ -24,7 +53,6 @@ jobs:
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
-          package-manager-cache: false
       - name: Ensure npm supports trusted publishing
         run: |
           npm install --global npm@^11.5.1
