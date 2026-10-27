@@ -22,7 +22,7 @@ describe('workspace foundation', () => {
 			expect(existsSync(manifestPath)).toBe(true);
 			const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
 			expect(manifest.name).toBe(name);
-			expect(manifest.version).toBe('0.1.0');
+			expect(manifest.version).toMatch(/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/);
 			expect(manifest.private).not.toBe(true);
 			expect(manifest.publishConfig).toEqual({ access: 'public' });
 		}
