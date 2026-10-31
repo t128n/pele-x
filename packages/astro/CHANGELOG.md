@@ -1,5 +1,12 @@
 # astro-pele
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies [46092b7]
+  - mdast-pele@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes
