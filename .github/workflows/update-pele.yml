@@ -118,11 +118,11 @@ jobs:
           PR: ${{ steps.pr.outputs.number }}
         run: |
           branch="pele/$VERSION"
-          before="$(gh run list --workflow ci.yml --branch "$branch" --limit 1 --json databaseId --jq '.[0].databaseId // empty')"
+          before="$(gh run list --workflow ci.yml --branch "$branch" --event workflow_dispatch --limit 1 --json databaseId --jq '.[0].databaseId // empty')"
           gh workflow run ci.yml --ref "$branch"
           run_id=""
           for _ in $(seq 1 30); do
-            run_id="$(gh run list --workflow ci.yml --branch "$branch" --limit 1 --json databaseId --jq '.[0].databaseId // empty')"
+            run_id="$(gh run list --workflow ci.yml --branch "$branch" --event workflow_dispatch --limit 1 --json databaseId --jq '.[0].databaseId // empty')"
             if [ -n "$run_id" ] && [ "$run_id" != "$before" ]; then
               break
             fi
