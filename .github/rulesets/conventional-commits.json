@@ -1,0 +1,21 @@
+{
+	"name": "Conventional commits",
+	"target": "branch",
+	"enforcement": "active",
+	"conditions": {
+		"ref_name": {
+			"include": ["refs/heads/main"],
+			"exclude": []
+		}
+	},
+	"rules": [
+		{
+			"type": "commit_message_pattern",
+			"parameters": {
+				"name": "Conventional Commits",
+				"operator": "regex",
+				"pattern": "^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\\([a-z0-9][a-z0-9._/-]*\\))?!?: .+|^Revert \".+\""
+			}
+		}
+	]
+}
