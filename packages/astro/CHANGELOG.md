@@ -1,5 +1,13 @@
 # astro-pele
 
+## 0.1.2
+
+### Patch Changes
+
+- 86381fc: Update Pele to 1.13.0.
+- Updated dependencies [86381fc]
+  - mdast-pele@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes
