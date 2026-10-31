@@ -47,7 +47,7 @@
 		"tsdown": "0.23.2",
 		"typescript": "6.0.3",
 		"unified": "11.0.0",
-		"unist-util-visit": "5.0.0"
+		"unist-util-visit": "5.2.0"
 	},
 	"engines": {
 		"node": ">=22.23.4"
