@@ -1,0 +1,28 @@
+{
+	"name": "Conventional branch names",
+	"target": "branch",
+	"enforcement": "active",
+	"conditions": {
+		"ref_name": {
+			"include": ["refs/heads/**"],
+			"exclude": [
+				"refs/heads/main",
+				"refs/heads/changeset-release/**",
+				"refs/heads/renovate/**",
+				"refs/heads/pele/**",
+				"refs/heads/dependabot/**",
+				"refs/heads/copilot/**"
+			]
+		}
+	},
+	"rules": [
+		{
+			"type": "branch_name_pattern",
+			"parameters": {
+				"name": "Conventional branch name",
+				"operator": "regex",
+				"pattern": "^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)/[a-z0-9][a-z0-9._-]*(/[a-z0-9][a-z0-9._-]*)*$"
+			}
+		}
+	]
+}
