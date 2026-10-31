@@ -1,6 +1,8 @@
 # Repository rulesets
 
-These JSON files document the branch rulesets used by this repository. Import one with **Settings → Rulesets → New ruleset → Import**, or apply it with the GitHub CLI:
+These JSON files document the branch rulesets used by this repository.
+
+## Applying Profiles
 
 ```sh
 gh api --method POST repos/t128n/pele-x/rulesets --input .github/rulesets/protect-main.json
@@ -29,5 +31,3 @@ The repository therefore enforces equivalent checks in CI:
 - `scripts/check-pr-policy.mjs` validates the pull request title and the head branch name.
 - `.github/workflows/ci.yml` runs that script on `pull_request` events, including title edits.
 - The existing `check` status is required by `protect-main.json`, so a failed policy check blocks the merge.
-
-If the repository moves to an organization on a plan that supports metadata rulesets, the two optional JSON files can be applied and the CI policy can be retired.
