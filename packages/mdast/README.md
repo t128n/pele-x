@@ -258,6 +258,22 @@ Parses `title="..."` and the `zoom` marker from fence metadata.
 
 Returns whether a fence language is handled by the plugin.
 
+## Agent skills
+
+The package ships an agent skill at [`skills/mdast-pele/SKILL.md`](./skills/mdast-pele/SKILL.md). Tools that follow the [Agent Skills](https://agentskills.io) convention can discover it from `node_modules`:
+
+```sh
+npx skills-npm
+```
+
+`skills-npm` is merging into the [`skills`](https://github.com/vercel-labs/skills) CLI. Once a project has migrated, use:
+
+```sh
+npx skills experimental_sync
+```
+
+The skill covers the remark and Sätteri setup, Astro and Starlight integrations, options, theming, and common mistakes, so an agent can use the package without reading this README first.
+
 ## Security
 
 Pele escapes diagram text, filters links and styles, and enforces source and output limits. See [Pele's security documentation](https://pele.run/security) for the full model.
