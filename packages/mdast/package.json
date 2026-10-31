@@ -3,6 +3,7 @@
 	"version": "0.1.2",
 	"description": "Render Mermaid fences to static SVG with Pele in remark and Sätteri pipelines.",
 	"keywords": [
+		"agent-skills",
 		"diagrams",
 		"markdown",
 		"mdast",
@@ -28,6 +29,7 @@
 	},
 	"files": [
 		"dist",
+		"skills",
 		"README.md",
 		"LICENSE"
 	],
