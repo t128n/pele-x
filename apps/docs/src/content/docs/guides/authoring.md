@@ -45,3 +45,7 @@ Builds default to `throw`; development and preview default to `placeholder`. An 
 ## MDX
 
 Fences work in MDX as well as Markdown. Mermaid labels containing braces, such as `B{Works?}`, remain diagram text rather than becoming MDX expressions.
+
+## Package options
+
+The fence syntax is shared by every package. See the [mdast-pele reference](../reference/mdast/) for plugin options and exported helpers, or the [Astro](../reference/astro/) and [Starlight](../reference/starlight/) references for integration options.

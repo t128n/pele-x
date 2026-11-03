@@ -21,7 +21,7 @@ export default defineConfig({
 });
 ```
 
-The plugin adds the Astro integration and registers its theme automatically. Diagram colors follow Starlight's light and dark themes through Starlight CSS variables.
+The plugin adds the Astro integration and registers its theme automatically. Diagram colors follow Starlight's light and dark themes through Starlight CSS variables. The integration uses [`astro-pele`](./astro/) and the [`mdast-pele`](./mdast/) renderer.
 
 ```mermaid title="Starlight diagram"
 flowchart LR
