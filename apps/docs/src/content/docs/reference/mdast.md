@@ -8,6 +8,8 @@ description: Reference for the mdast-pele remark and Sätteri adapters, options,
 
 The package also provides the renderer used by [`astro-pele`](./astro/) and [`starlight-pele`](./starlight/). Use it directly when you control the Markdown pipeline yourself.
 
+**Package:** [`mdast-pele` on npmx](https://npmx.dev/package/mdast-pele) · [Source](https://github.com/t128n/pele-x/tree/main/packages/mdast)
+
 ## Install
 
 ```sh

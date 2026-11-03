@@ -16,6 +16,8 @@ bun add mdast-pele
 
 `pele` is installed automatically as a dependency. The package is ESM-only and requires Node.js 20 or later.
 
+[View `mdast-pele` on npmx](https://npmx.dev/package/mdast-pele).
+
 ## Choose an adapter
 
 The package exposes one adapter per pipeline:

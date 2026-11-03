@@ -4,6 +4,8 @@ title: pele-x
 description: Native Pele integrations for mdast, Astro and Starlight.
 ---
 
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
 pele-x brings [Pele](https://pele.run), the fast Mermaid-to-SVG renderer, into the JavaScript ecosystem. It turns Mermaid fences into inline SVG at build time, so diagrams are themeable and accessible without shipping a browser-side Mermaid runtime.
 
 ```mermaid title="From Markdown to SVG"
@@ -14,13 +16,30 @@ flowchart LR
 
 ## Packages
 
-| Package          | Purpose                                                                |
-| ---------------- | ---------------------------------------------------------------------- |
-| `mdast-pele`     | Core renderer plus remark and Sätteri adapters                         |
-| `astro-pele`     | Astro integration, `<Pele />` component, neutral theme and zoom script |
-| `starlight-pele` | Starlight plugin and light/dark theme                                  |
+<CardGrid>
+	<LinkCard
+		title="mdast-pele"
+		description="Core renderer plus remark and Sätteri adapters."
+		href="https://npmx.dev/package/mdast-pele"
+	/>
+	<LinkCard
+		title="astro-pele"
+		description="Astro integration, component, neutral theme and zoom script."
+		href="https://npmx.dev/package/astro-pele"
+	/>
+	<LinkCard
+		title="starlight-pele"
+		description="Starlight plugin and light/dark theme."
+		href="https://npmx.dev/package/starlight-pele"
+	/>
+	<LinkCard
+		title="GitHub repository"
+		description="Source, examples, issues and release history."
+		href="https://github.com/t128n/pele-x"
+	/>
+</CardGrid>
 
-The packages use the `*-pele` naming convention because they integrate Pele into each ecosystem. The project and repository are called `pele-x`.
+All three packages are published on [npmx](https://npmx.dev). The packages use the `*-pele` naming convention because they integrate Pele into each ecosystem.
 
 ## Why static SVG?
 
