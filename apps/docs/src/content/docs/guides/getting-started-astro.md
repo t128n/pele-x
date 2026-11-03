@@ -4,7 +4,7 @@ title: Get started with Astro
 description: Add static Mermaid diagrams to a plain Astro site.
 ---
 
-This tutorial adds Pele x to an existing Astro site without Starlight. By the end you will have a built page that contains a static SVG diagram and no browser-side Pele JavaScript.
+This guide adds pele-x to an existing Astro site without Starlight. By the end you will have a built page that contains a static SVG diagram and no browser-side Pele JavaScript.
 
 ## Install the package
 
@@ -54,5 +54,6 @@ Open the built page. The fence has been replaced by an inline SVG.
 
 ## Next steps
 
-- Learn how to write [diagrams, captions and zoom markers](../how-to/authoring/).
+- Learn how to write [diagrams, captions and zoom markers](./authoring/).
+- Review the [Astro integration reference](../reference/astro/).
 - Browse the [diagram examples](../reference/examples/) to see what Pele can render.

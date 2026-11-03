@@ -15,7 +15,7 @@ export default defineConfig({
 });
 ```
 
-The integration supports Astro's default `satteri()` processor and the `unified()` processor from `@astrojs/markdown-remark`. It selects the matching adapter automatically.
+The integration supports Astro's default `satteri()` processor and the `unified()` processor from `@astrojs/markdown-remark`. It selects the matching [mdast-pele](./mdast/) adapter automatically.
 
 Import `astro-pele/theme.css` for a neutral light and dark diagram theme. Then add a fence to any Markdown or MDX page:
 

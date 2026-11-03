@@ -4,7 +4,7 @@ title: Get started with Starlight
 description: Add static Mermaid diagrams to a Starlight site.
 ---
 
-This tutorial adds Pele x to an existing Starlight site. By the end you will have a built page that contains a static SVG diagram and no browser-side Pele JavaScript.
+This guide adds pele-x to an existing Starlight site. By the end you will have a built page that contains a static SVG diagram and no browser-side Pele JavaScript.
 
 ## Install the package
 
@@ -60,5 +60,6 @@ Open the built page. The fence has been replaced by an inline SVG styled with yo
 
 ## Next steps
 
-- Learn how to write [diagrams, captions and zoom markers](../how-to/authoring/).
+- Learn how to write [diagrams, captions and zoom markers](./authoring/).
+- Review the [Starlight plugin reference](../reference/starlight/).
 - Browse the [diagram examples](../reference/examples/) to see what Pele can render.
