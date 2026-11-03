@@ -6,6 +6,8 @@ description: Add static Mermaid diagrams directly to an Astro site.
 
 Use `astro-pele` when your site does not use Starlight. Add `pele()` to the integrations in `astro.config.mjs`:
 
+**Package:** [`astro-pele` on npmx](https://npmx.dev/package/astro-pele) · [Source](https://github.com/t128n/pele-x/tree/main/packages/astro)
+
 ```js
 import { pele } from 'astro-pele';
 import { defineConfig } from 'astro/config';

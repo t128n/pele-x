@@ -14,6 +14,8 @@ bun add astro-pele pele
 
 `mdast-pele` is installed automatically as a dependency of `astro-pele`. You only need the two packages above.
 
+[View `astro-pele` on npmx](https://npmx.dev/package/astro-pele).
+
 ## Add the integration
 
 Open `astro.config.mjs` and register the integration:

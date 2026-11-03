@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import { starlightPele } from 'starlight-pele';
 
 const base = '/pele-x';
+const repo = 'https://github.com/t128n/pele-x';
 
 export default defineConfig({
 	site: 'https://t128n.github.io',
@@ -16,6 +17,10 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'pele-x',
+			description: 'Native Pele integrations for mdast, Astro and Starlight.',
+			social: [{ icon: 'github', label: 'GitHub', href: repo }],
+			editLink: { baseUrl: `${repo}/edit/main/apps/docs/` },
+			lastUpdated: true,
 			plugins: [starlightPele()],
 			customCss: ['./src/styles/custom.css'],
 			sidebar: [

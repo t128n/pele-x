@@ -14,6 +14,8 @@ bun add starlight-pele pele
 
 `astro-pele` and `mdast-pele` are installed automatically as dependencies of `starlight-pele`. You only need the two packages above.
 
+[View `starlight-pele` on npmx](https://npmx.dev/package/starlight-pele).
+
 ## Add the plugin
 
 Open `astro.config.mjs` and register the plugin:

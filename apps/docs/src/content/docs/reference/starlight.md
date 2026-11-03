@@ -6,6 +6,8 @@ description: Add static Mermaid diagrams and Starlight theming with one plugin.
 
 Use `starlight-pele` when your documentation site already uses Starlight. Pass `starlightPele()` to Starlight's `plugins` option in `astro.config.mjs`:
 
+**Package:** [`starlight-pele` on npmx](https://npmx.dev/package/starlight-pele) · [Source](https://github.com/t128n/pele-x/tree/main/packages/starlight)
+
 ```js
 import starlight from '@astrojs/starlight';
 import { starlightPele } from 'starlight-pele';
